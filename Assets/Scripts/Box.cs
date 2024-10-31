@@ -8,17 +8,24 @@ public class Box : MonoBehaviour
     private GameObject[] Walls;
     private GameObject[] Boxes;
     private GameObject[] Goals;
+
+    public bool inPlace;
     void Start()
     {
-        Walls = GameObject.FindGameObjectsWithTag("Wall");
-        Boxes = GameObject.FindGameObjectsWithTag("Box");
-        Goals = GameObject.FindGameObjectsWithTag("Goal");
+        UpdateReferences();
 
     }
+    public void UpdateReferences()
+    {
+        Walls = GameObject.FindGameObjectsWithTag("Wall");
+        Goals = GameObject.FindGameObjectsWithTag("Goal");
+        Boxes = GameObject.FindGameObjectsWithTag("Box");
+    }
 
-    // Update is called once per frame
     void Update()
     {
+        Goals = GameObject.FindGameObjectsWithTag("Goal");
+        ArrivedOnGoal();
         
     }
 
@@ -32,6 +39,7 @@ public class Box : MonoBehaviour
             return true;
         }
     }
+
     public bool BoxBlocked(Vector3 position, Vector2 direction)
     {
         Vector2 newPos = new Vector2(position.x, position.y) + direction;
@@ -51,16 +59,20 @@ public class Box : MonoBehaviour
         }
         return false;
     }
-    public bool isOnGoal{
-        get{
-            foreach(GameObject goal in Goals)
+    public void ArrivedOnGoal()
+    {
+        SpriteRenderer boxColor = GetComponent<SpriteRenderer>();
+
+        foreach(GameObject goal in Goals)
+        {
+            if(transform.position.x == goal.transform.position.x && transform.position.y == goal.transform.position.y)
             {
-                if(goal.transform.position.x == transform.position.x && goal.transform.position.y == transform.position.y)
-                {
-                    return true;
-                }
+                inPlace = true;
+                boxColor.color = Color.green;
+                return;
             }
-            return false;
         }
+        boxColor.color = Color.white;
+        inPlace = false;
     }
 }

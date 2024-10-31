@@ -6,30 +6,31 @@ public class GameManager : MonoBehaviour
 {
     private GameObject[] Boxes;
     private GameObject[] Goals;
-    public int currentLevel = 1;
+    private GameObject[] Walls;
+    public int currentLevel;
 
- private char[][] level1 = new char[][]
+    private char[][] level1 = new char[][]
     {
-        new char[] {'#','#','#','#','#','#','#','#','.','.'},
-        new char[] {'#','X','.','.','.','.','.','#','#','.'},
-        new char[] {'#','.','.','.','.','.','.','.','#','#'},
-        new char[] {'#','.','.','.','.','.','.','.','.','#'},
-        new char[] {'#','.','.','.','.','.','.','.','.','#'},
-        new char[] {'#','.','B','.','.','.','.','.','.','#'},
-        new char[] {'#','.','.','.','.','.','.','.','.','#'},
-        new char[] {'#','.','.','.','.','.','.','.','.','#'},
+        new char[] {'#','#','#','#','#','#','#','#',' ',' '},
+        new char[] {'#','X',' ',' ',' ',' ',' ','#','#',' '},
+        new char[] {'#',' ',' ',' ',' ',' ',' ',' ','#','#'},
+        new char[] {'#',' ',' ',' ',' ',' ',' ',' ',' ','#'},
+        new char[] {'#',' ',' ',' ','P',' ',' ',' ',' ','#'},
+        new char[] {'#',' ','B',' ',' ',' ',' ',' ',' ','#'},
+        new char[] {'#',' ',' ',' ',' ',' ',' ',' ',' ','#'},
+        new char[] {'#',' ',' ',' ',' ',' ',' ',' ',' ','#'},
         new char[] {'#','#','#','#','#','#','#','#','#','#'}
     };
     private char[][] level2 = new char[][]
     {
         new char[] {'#','#','#','#','#','#','#','#','#'},
-        new char[] {'#','.','.','.','.','.','.','.','#'},
-        new char[] {'#','.','B','.','.','.','.','.','#'},
-        new char[] {'#','.','.','.','.','.','.','.','#'},
-        new char[] {'#','.','.','#','#','.','.','.','#'},
-        new char[] {'#','.','#','#','.','.','.','.','#'},
-        new char[] {'#','.','.','.','.','.','X','.','#'},
-        new char[] {'#','.','.','.','.','.','.','.','#'},
+        new char[] {'#',' ',' ',' ',' ',' ',' ',' ','#'},
+        new char[] {'#',' ','B',' ',' ',' ','P',' ','#'},
+        new char[] {'#',' ',' ',' ',' ',' ',' ',' ','#'},
+        new char[] {'#',' ',' ','#','#',' ',' ',' ','#'},
+        new char[] {'#',' ','#','#',' ',' ',' ',' ','#'},
+        new char[] {'#',' ',' ',' ',' ',' ','X',' ','#'},
+        new char[] {'#',' ',' ',' ',' ',' ',' ',' ','#'},
         new char[] {'#','#','#','#','#','#','#','#','#'}
     };
     private char[][] level3 = new char[][]
@@ -40,7 +41,7 @@ public class GameManager : MonoBehaviour
         new char[] {'#', ' ', ' ', ' ', '#', '#', '#', ' ', ' ', ' ', '#', ' ', ' ', '#'},
         new char[] {'#', ' ', ' ', ' ', '#', ' ', ' ', ' ', ' ', ' ', '#', ' ', ' ', '#'},
         new char[] {'#', ' ', ' ', ' ', '#', ' ', ' ', 'B', ' ', ' ', '#', ' ', 'X', '#'},
-        new char[] {'#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#', ' ', ' ', ' ', ' ', '#'},
+        new char[] {'#', ' ', 'P', ' ', ' ', ' ', ' ', ' ', '#', ' ', ' ', ' ', ' ', '#'},
         new char[] {'#', ' ', ' ', ' ', ' ', 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'},
         new char[] {'#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#'}
     };
@@ -49,7 +50,7 @@ public class GameManager : MonoBehaviour
     {
         new char[] {'#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#'},
         new char[] {'#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'},
-        new char[] {'#', ' ', ' ', ' ', '#', ' ', ' ', ' ', 'B', ' ', '#', ' ', 'X', '#'},
+        new char[] {'#', ' ', 'P', ' ', '#', ' ', ' ', ' ', 'B', ' ', '#', ' ', 'X', '#'},
         new char[] {'#', ' ', ' ', ' ', '#', ' ', '#', '#', '#', ' ', ' ', ' ', ' ', '#'},
         new char[] {'#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#', ' ', ' ', ' ', ' ', '#'},
         new char[] {'#', ' ', 'B', ' ', ' ', ' ', 'X', ' ', ' ', ' ', ' ', 'B', ' ', '#'},
@@ -66,7 +67,7 @@ public class GameManager : MonoBehaviour
         new char[] {'#', ' ', ' ', ' ', ' ', ' ', '#', ' ', '#', ' ', '#', ' ', ' ', '#'},
         new char[] {'#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'},
         new char[] {'#', ' ', ' ', 'X', ' ', ' ', ' ', ' ', '#', ' ', ' ', 'B', ' ', '#'},
-        new char[] {'#', ' ', ' ', ' ', '#', ' ', ' ', ' ', ' ', ' ', '#', ' ', ' ', '#'},
+        new char[] {'#', ' ', ' ', ' ', '#', ' ', 'P', ' ', ' ', ' ', '#', ' ', ' ', '#'},
         new char[] {'#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'},
         new char[] {'#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#'}
     };
@@ -78,7 +79,7 @@ public class GameManager : MonoBehaviour
         new char[] {'#', ' ', ' ', ' ', '#', ' ', ' ', ' ', ' ', 'B', ' ', ' ', ' ', '#'},
         new char[] {'#', ' ', ' ', '#', '#', '#', ' ', '#', ' ', ' ', ' ', '#', ' ', '#'},
         new char[] {'#', ' ', 'X', ' ', ' ', ' ', ' ', '#', ' ', ' ', ' ', 'B', ' ', '#'},
-        new char[] {'#', ' ', ' ', ' ', ' ', ' ', '#', '#', ' ', '#', ' ', ' ', ' ', '#'},
+        new char[] {'#', ' ', ' ', ' ', 'P', ' ', '#', '#', ' ', '#', ' ', ' ', ' ', '#'},
         new char[] {'#', ' ', ' ', ' ', ' ', 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'},
         new char[] {'#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#'}
     };
@@ -91,7 +92,7 @@ public class GameManager : MonoBehaviour
         new char[] {'#', ' ', ' ', ' ', '#', '#', '#', '#', ' ', ' ', ' ', 'B', ' ', '#'},
         new char[] {'#', ' ', 'X', ' ', ' ', ' ', ' ', '#', ' ', ' ', '#', '#', ' ', '#'},
         new char[] {'#', ' ', ' ', ' ', '#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'},
-        new char[] {'#', ' ', 'B', ' ', '#', ' ', 'X', ' ', ' ', ' ', ' ', ' ', ' ', '#'},
+        new char[] {'#', ' ', 'B', ' ', '#', ' ', 'X', ' ', ' ', 'P', ' ', ' ', ' ', '#'},
         new char[] {'#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'},
         new char[] {'#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#'}
     };
@@ -102,21 +103,31 @@ public class GameManager : MonoBehaviour
     public GameObject wallPrefab;
     public GameObject goalPrefab;
     public GameObject boxPrefab;
+    public GameObject playerPrefab;
 
     void PlaceWall(Vector2 position)
     {
+        Debug.Log("Placing wall at position: " + position);
         Instantiate(wallPrefab, position, Quaternion.identity);
     }
     void PlaceGoal(Vector2 position)
     {
+        Debug.Log("Placing goal at position: " + position);
         Instantiate(goalPrefab, position, Quaternion.identity);
     }
     void PlaceBox(Vector2 position)
     {
+        Debug.Log("Placing box at position: " + position);
         Instantiate(boxPrefab, position, Quaternion.identity);
+    }
+    void PlacePlayer(Vector2 position)
+    {
+        Debug.Log("Placing player at position: " + position);
+        Instantiate(playerPrefab, position, Quaternion.identity);
     }
 
     public void BuildLevel(char[][] level){
+        Debug.Log("Building level");
         int rowNum = xOffset;
         int colNum = yOffset;
         foreach (var i in level)
@@ -137,94 +148,87 @@ public class GameManager : MonoBehaviour
                 {
                     PlaceBox(new Vector2(rowNum, colNum));
                 }
+                if (j == 'P')
+                {
+                    PlacePlayer(new Vector2(rowNum, colNum));
+                }
             }
             rowNum = xOffset;
             
         }
     }
     public void ClearLevel(){
-        GameObject[] walls = GameObject.FindGameObjectsWithTag("Wall");
-        foreach(GameObject wall in walls)
-        {
-            Destroy(wall);
-        }
-        GameObject[] goals = GameObject.FindGameObjectsWithTag("Goal");
-        foreach(GameObject goal in goals)
-        {
-            Destroy(goal);
-        }
-        GameObject[] boxes = GameObject.FindGameObjectsWithTag("Box");
-        foreach(GameObject box in boxes)
+        Debug.Log("Clearing level");
+        Boxes = GameObject.FindGameObjectsWithTag("Box");
+        Goals = GameObject.FindGameObjectsWithTag("Goal");
+        Walls = GameObject.FindGameObjectsWithTag("Wall");
+        foreach (var box in Boxes)
         {
             Destroy(box);
         }
+        foreach (var goal in Goals)
+        {
+            Destroy(goal);
+        }
+        foreach (var wall in Walls)
+        {
+            Destroy(wall);
+        }
+        Destroy(GameObject.FindWithTag("Player"));
     }
-
 
     void Start()
     {
+        Debug.Log("Game started");
         Boxes = GameObject.FindGameObjectsWithTag("Box");
         Goals = GameObject.FindGameObjectsWithTag("Goal");
+        Walls = GameObject.FindGameObjectsWithTag("Wall");
         SetLevel(currentLevel);
     }
 
     void Update()
     {
-        if(allGoalsHaveBoxes())
+        if (IsLevelComplete())
         {
             Debug.Log("You Win!");
-            ClearLevel();
             currentLevel++;
             SetLevel(currentLevel);
         }
     }
 
-    public bool allGoalsHaveBoxes(){
-        bool hasBox = false;
-        foreach(GameObject goal in Goals)
-        {
-            
-            foreach(GameObject box in Boxes)
-            {
-                if(goal.transform.position.x == box.transform.position.x && goal.transform.position.y == box.transform.position.y)
-                {
-                    hasBox = true;
-                }
+   private bool IsLevelComplete(){
+        Debug.Log("Checking if level is complete");
+        Box[] boxes = FindObjectsOfType<Box>();
+        foreach (var box in boxes){
+            if (!box.inPlace){
+                return false;
             }
         }
-        return hasBox;
+        return true;
     }
 
-    public void SetLevel(int level){
+    public void SetLevel(int level)
+    {
+        Debug.Log("Setting level to: " + level);
         currentLevel = level;
         ClearLevel();
-        if(currentLevel == 1)
-        {
-            BuildLevel(level1);
-        }
-        if(currentLevel == 2)
-        {
-            BuildLevel(level2);
-        }
-        if(currentLevel == 3)
-        {
-            BuildLevel(level3);
-        }
-        if(currentLevel == 4)
-        {
-            BuildLevel(level4);
-        }
-        if(currentLevel == 5)
-        {
-            BuildLevel(level5);
-        }
-        if(currentLevel == 6)
-        {
-            BuildLevel(level6);
-        }
-        if(currentLevel == 7)
-        {
-            BuildLevel(level7);
-        }
+        
+        if (currentLevel == 1) BuildLevel(level1);
+        else if (currentLevel == 2) BuildLevel(level2);
+        else if (currentLevel == 3) BuildLevel(level3);
+        else if (currentLevel == 4) BuildLevel(level4);
+        else if (currentLevel == 5) BuildLevel(level5);
+        else if (currentLevel == 6) BuildLevel(level6);
+        else if (currentLevel == 7) BuildLevel(level7);
+        UpdateReferences();
+    }
+
+    private void UpdateReferences()
+    {
+        Debug.Log("Updating references");
+        Boxes = GameObject.FindGameObjectsWithTag("Box");
+        Goals = GameObject.FindGameObjectsWithTag("Goal");
+        Walls = GameObject.FindGameObjectsWithTag("Wall");
+        
     }
 }

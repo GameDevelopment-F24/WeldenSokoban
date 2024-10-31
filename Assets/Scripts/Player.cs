@@ -11,10 +11,14 @@ public class Player : MonoBehaviour
     private bool ReadyToMove;
     void Start()
     {
-        Walls = GameObject.FindGameObjectsWithTag("Wall");
-        Boxes = GameObject.FindGameObjectsWithTag("Box");
+        UpdateReferences();
         ReadyToMove = true;
 
+    }
+    public void UpdateReferences()
+    {
+        Walls = GameObject.FindGameObjectsWithTag("Wall");
+        Boxes = GameObject.FindGameObjectsWithTag("Box");
     }
     void Update()
     {
@@ -52,6 +56,10 @@ public class Player : MonoBehaviour
             return true;
         }
     }
+    // public void SetPlayerPosition(Vector2 position)
+    // {
+    //     transform.position = new Vector3(position.x, position.y, 0);
+    // }
 
     public bool Blocked(Vector3 position, Vector2 direction)
     {
