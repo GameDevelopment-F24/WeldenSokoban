@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -88,7 +89,7 @@ public class GameManager : MonoBehaviour
     {
         new char[] {'#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#'},
         new char[] {'#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'},
-        new char[] {'#', ' ', ' ', 'B', ' ', '#', ' ', ' ', ' ', ' ', 'X', ' ', ' ', '#'},
+        new char[] {'#', ' ', ' ', 'B', ' ', ' ', ' ', ' ', ' ', ' ', 'X', ' ', ' ', '#'},
         new char[] {'#', ' ', ' ', ' ', '#', '#', '#', '#', ' ', ' ', ' ', 'B', ' ', '#'},
         new char[] {'#', ' ', 'X', ' ', ' ', ' ', ' ', '#', ' ', ' ', '#', '#', ' ', '#'},
         new char[] {'#', ' ', ' ', ' ', '#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'},
@@ -220,6 +221,7 @@ public class GameManager : MonoBehaviour
         else if (currentLevel == 5) BuildLevel(level5);
         else if (currentLevel == 6) BuildLevel(level6);
         else if (currentLevel == 7) BuildLevel(level7);
+        else if (currentLevel == 8) EndScreen();
         UpdateReferences();
     }
 
@@ -235,5 +237,9 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Restarting level");
         SetLevel(currentLevel);
+    }
+    public void EndScreen()
+    {
+        SceneManager.LoadScene("EndScreen");
     }
 }
