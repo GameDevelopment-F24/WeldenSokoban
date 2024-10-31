@@ -63,7 +63,9 @@ public class Player : MonoBehaviour
 
     public bool Blocked(Vector3 position, Vector2 direction)
     {
+
         Vector2 newPos = new Vector2(position.x, position.y) + direction;
+        Walls = GameObject.FindGameObjectsWithTag("Wall");
         foreach(GameObject wall in Walls)
         {
             if(wall.transform.position.x == newPos.x && wall.transform.position.y == newPos.y)
@@ -71,6 +73,7 @@ public class Player : MonoBehaviour
                 return true;
             }
         }
+        Boxes = GameObject.FindGameObjectsWithTag("Box");
         foreach(GameObject box in Boxes)
         {
             if(box.transform.position.x == newPos.x && box.transform.position.y == newPos.y)

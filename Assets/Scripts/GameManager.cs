@@ -54,7 +54,7 @@ public class GameManager : MonoBehaviour
         new char[] {'#', ' ', ' ', ' ', '#', ' ', '#', '#', '#', ' ', ' ', ' ', ' ', '#'},
         new char[] {'#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#', ' ', ' ', ' ', ' ', '#'},
         new char[] {'#', ' ', 'B', ' ', ' ', ' ', 'X', ' ', ' ', ' ', ' ', 'B', ' ', '#'},
-        new char[] {'#', ' ', ' ', '#', ' ', ' ', ' ', '#', '#', '#', ' ', ' ', ' ', '#'},
+        new char[] {'#', ' ', ' ', '#', ' ', ' ', ' ', '#', '#', '#', ' ', 'X', ' ', '#'},
         new char[] {'#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'},
         new char[] {'#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#'}
     };
@@ -230,5 +230,10 @@ public class GameManager : MonoBehaviour
         Goals = GameObject.FindGameObjectsWithTag("Goal");
         Walls = GameObject.FindGameObjectsWithTag("Wall");
         
+    }
+    public void RestartLevel()
+    {
+        Debug.Log("Restarting level");
+        SetLevel(currentLevel);
     }
 }

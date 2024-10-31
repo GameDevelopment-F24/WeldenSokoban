@@ -24,7 +24,6 @@ public class Box : MonoBehaviour
 
     void Update()
     {
-        Goals = GameObject.FindGameObjectsWithTag("Goal");
         ArrivedOnGoal();
         
     }
@@ -43,6 +42,7 @@ public class Box : MonoBehaviour
     public bool BoxBlocked(Vector3 position, Vector2 direction)
     {
         Vector2 newPos = new Vector2(position.x, position.y) + direction;
+        Walls = GameObject.FindGameObjectsWithTag("Wall");
         foreach(GameObject wall in Walls)
         {
             if(wall.transform.position.x == newPos.x && wall.transform.position.y == newPos.y)
@@ -50,6 +50,7 @@ public class Box : MonoBehaviour
                 return true;
             }
         }
+        Boxes = GameObject.FindGameObjectsWithTag("Box");
         foreach(GameObject box in Boxes)
         {
             if(box.transform.position.x == newPos.x && box.transform.position.y == newPos.y)
@@ -62,7 +63,7 @@ public class Box : MonoBehaviour
     public void ArrivedOnGoal()
     {
         SpriteRenderer boxColor = GetComponent<SpriteRenderer>();
-
+        Goals = GameObject.FindGameObjectsWithTag("Goal");
         foreach(GameObject goal in Goals)
         {
             if(transform.position.x == goal.transform.position.x && transform.position.y == goal.transform.position.y)
